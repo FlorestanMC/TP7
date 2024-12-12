@@ -1,5 +1,8 @@
 package champollion;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Un enseignant est caractérisé par les informations suivantes : son nom, son adresse email, et son service prévu,
  * et son emploi du temps.
@@ -7,6 +10,7 @@ package champollion;
 public class Enseignant extends Personne {
 
     // TODO : rajouter les autres méthodes présentes dans le diagramme UML
+    private final List<ServicePrevu> Services = new LinkedList<>();
 
     public Enseignant(String nom, String email) {
         super(nom, email);
@@ -21,8 +25,11 @@ public class Enseignant extends Personne {
      *
      */
     public int heuresPrevues() {
-        // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        int total = 0;
+        for ( ServicePrevu s : Services ) {
+             total = total + Math.round(s.getTotal());
+        }
+        return total;
     }
 
     /**
@@ -35,8 +42,14 @@ public class Enseignant extends Personne {
      *
      */
     public int heuresPrevuesPourUE(UE ue) {
-        // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        int total = 0;
+        for ( ServicePrevu s : Services ) {
+            if (ue == s.getUE()) {
+                total += Math.round(s.getTotal());
+
+            }
+        }
+        return total;
     }
 
     /**
@@ -48,8 +61,10 @@ public class Enseignant extends Personne {
      * @param volumeTP le volume d'heures de TP
      */
     public void ajouteEnseignement(UE ue, int volumeCM, int volumeTD, int volumeTP) {
-        // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+
+        ServicePrevu service = new ServicePrevu(ue, volumeCM, volumeTD, volumeTP, this);
+        Services.add(service);
+
     }
 
 }
